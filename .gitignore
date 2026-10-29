@@ -5,3 +5,6 @@ generated/
 config.json
 .env*
 *.kubeconfig
+build/
+dist/
+*.egg-info/

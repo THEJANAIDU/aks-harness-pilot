@@ -93,3 +93,7 @@ CI runs configuration/security/command-boundary tests on Python 3.10, 3.12 and 3
 Supply environment secret `HARNESS_API_KEY` with pipeline-execute permission. The workflow submits the existing imported Harness pipeline and reports its execution ID; inspect Harness/status for rollout completion. It does not bootstrap a delegate or import entities.
 
 Before deployment submission, the agent fetches the configured Git commit using your existing Git credential helper and verifies that `deploy/app/` contains only `application.yaml`, exactly matching the generated release (including the image digest). This guards against stale or mismatched source. Private Git access must therefore work from both the CLI runner and the deployment engine. Adapt the generator and tests together when extending the supported workload.
+
+## Packaged application demo
+
+The sample is now a versioned Python package with a multi-stage container build, HTML release page, health endpoints and release JSON. See [sample build and AKS/GitOps demo](docs/SAMPLE-DEMO.md). The packaging workflow produces both amd64/arm64 images and a downloadable wheel.

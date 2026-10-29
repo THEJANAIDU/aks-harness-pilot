@@ -1,0 +1,1 @@
+"""AKS Pilot demo application."""

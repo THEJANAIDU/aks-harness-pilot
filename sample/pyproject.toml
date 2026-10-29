@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aks-pilot-demo"
+version = "1.0.0"
+description = "Versioned HTTP service for AKS GitOps demonstrations"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+aks-pilot-demo = "aks_pilot_demo.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
