@@ -1,0 +1,19 @@
+{
+  "subscription": "11111111-1111-1111-1111-111111111111",
+  "resource_group": "rg-aks-demo",
+  "cluster": "aks-demo",
+  "context": "aks-demo",
+  "namespace": "pilot-demo",
+  "application": "pilot-demo",
+  "image": "ghcr.io/example/sample@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "repo_url": "https://github.com/THEJANAIDU/aks-harness-pilot.git",
+  "revision": "0000000000000000000000000000000000000000",
+  "account": "REPLACE_ME",
+  "org": "default",
+  "project": "REPLACE_ME",
+  "pipeline": "aks_delivery",
+  "input_sets": [
+    "staging"
+  ],
+  "delegate_image": "harness/delegate:REPLACE_ME@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+}

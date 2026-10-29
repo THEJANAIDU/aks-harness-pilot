@@ -1,0 +1,44 @@
+name: Deploy reviewed staging release
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: staging-delivery
+  cancel-in-progress: false
+jobs:
+  deploy:
+    environment: staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+      - name: Load reviewed configuration
+        env:
+          AGENT_CONFIG: ${{ vars.AGENT_CONFIG_JSON }}
+        run: |
+          python - <<'PYCODE'
+          import json, os
+          from pathlib import Path
+          Path('config.json').write_text(json.dumps(json.loads(os.environ['AGENT_CONFIG'])))
+          PYCODE
+          python agent.py validate --config config.json
+      - run: python agent.py render --config config.json --output generated
+      - name: Submit Harness execution
+        env:
+          HARNESS_API_KEY: ${{ secrets.HARNESS_API_KEY }}
+        run: |
+          python agent.py execute --config config.json --yes > execution.json
+          python - <<'PYCODE'
+          import json
+          from pathlib import Path
+          execution = json.loads(Path('execution.json').read_text())
+          with open(__import__('os').environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('Submitted Harness execution: `' + execution['execution_id'] + '`; check Harness for rollout outcome.\n')
+          PYCODE
+
